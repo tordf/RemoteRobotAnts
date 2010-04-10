@@ -21,6 +21,22 @@ public class Resource implements SourceProvider,SaveHandler
 {
 
     SourceProvider source = null;
+
+    public SaveHandler getSaveHandler() {
+        return saveHandler;
+    }
+
+    public void setSaveHandler(SaveHandler saveHandler) {
+        this.saveHandler = saveHandler;
+    }
+
+    public SourceProvider getSource() {
+        return source;
+    }
+
+    public void setSource(SourceProvider source) {
+        this.source = source;
+    }
     SaveHandler saveHandler = null;
 
     public String GetSource()
