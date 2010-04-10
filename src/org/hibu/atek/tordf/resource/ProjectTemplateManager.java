@@ -45,10 +45,15 @@ public class ProjectTemplateManager implements TemplateManager
          File dir = null;
          try {
                 dir = new File(parent, DefaultProjectName + id);
-                boolean created = dir.createNewFile();
-                if (!created) {
+                boolean created = dir.exists();
+                if (!created) 
                     System.out.println("Directory not created");
+                else
+                {
+                    boolean b = dir.delete();
+                    System.out.println("Directory created:" + dir.getAbsolutePath());
                 }
+
 
                 DirectoryCopy.copyDirectory(getTemplateDir(), dir);
             } catch (IOException ex) {

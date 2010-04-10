@@ -13,31 +13,33 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import org.hibu.atek.tordf.communication.Server;
+import org.hibu.atek.tordf.resource.ProjectTemplateManager;
+import org.hibu.atek.tordf.resource.TemplateManager;
 
 /**
  * The application's main frame.
  */
 public class AntManagerView extends FrameView {
 
-    //Builder b1 = new Builder(1,"0016530072da");
-    //Builder b2 = new Builder(2,"00165301f5f7");
-    //Builder b3 = new Builder(3,null);
-    //Builder b4 = new Builder(4,null);
     String directoryPath = "C:\\";
     AddressManager addressManager = new AddressManager();
     ResourceManager resourceManager = new ResourceManager();
     Server server = new Server();
     public AntManagerView(SingleFrameApplication app) {
         super(app);        
-        //addressManager.Add("0016530072da");
-        //addressManager.Add("00165301f5f7");
-        //resourceManager.setAddressManager(addressManager);
-        resourceManager.populate(4);
+        addressManager.Add("0016530072da");
+        addressManager.Add("00165301f5f7");
+        ProjectTemplateManager tm = new ProjectTemplateManager();
+        tm.setTemplateDir(new File("C:\\Users\\tord\\Programming\\RobotProjectTemplates\\ProjectTemplateNXT"));
+        resourceManager.setTemplateManager(tm);
+        resourceManager.setAddressManager(addressManager);
+        resourceManager.populate(2);
         Thread t = new Thread(server);
         server.setResourceManager(resourceManager);
         t.start();
