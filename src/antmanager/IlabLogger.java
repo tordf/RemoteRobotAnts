@@ -6,7 +6,6 @@
 package antmanager;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.BuildEvent;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *

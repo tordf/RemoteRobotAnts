@@ -4,6 +4,8 @@
 
 package antmanager;
 
+import org.hibu.atek.tordf.resource.AddressManager;
+import org.hibu.atek.tordf.resource.ResourceManager;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -15,19 +17,30 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import org.hibu.atek.tordf.communication.Server;
 
 /**
  * The application's main frame.
  */
 public class AntManagerView extends FrameView {
 
-    Builder b1 = new Builder(1,"0016530072da");
-    Builder b2 = new Builder(2,"00165301f5f7");
-    Builder b3 = new Builder(3,null);
-    Builder b4 = new Builder(4,null);
+    //Builder b1 = new Builder(1,"0016530072da");
+    //Builder b2 = new Builder(2,"00165301f5f7");
+    //Builder b3 = new Builder(3,null);
+    //Builder b4 = new Builder(4,null);
+    String directoryPath = "C:\\";
+    AddressManager addressManager = new AddressManager();
+    ResourceManager resourceManager = new ResourceManager();
+    Server server = new Server();
     public AntManagerView(SingleFrameApplication app) {
-        super(app);
-
+        super(app);        
+        //addressManager.Add("0016530072da");
+        //addressManager.Add("00165301f5f7");
+        //resourceManager.setAddressManager(addressManager);
+        resourceManager.populate(4);
+        Thread t = new Thread(server);
+        server.setResourceManager(resourceManager);
+        t.start();
         initComponents();
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
@@ -137,6 +150,9 @@ public class AntManagerView extends FrameView {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        dirPathTitleLabel = new javax.swing.JLabel();
+        directoryPathLabel = new javax.swing.JLabel();
+        SelecDirButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -442,19 +458,39 @@ public class AntManagerView extends FrameView {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        dirPathTitleLabel.setText(resourceMap.getString("dirPathTitleLabel.text")); // NOI18N
+        dirPathTitleLabel.setName("dirPathTitleLabel"); // NOI18N
+
+        directoryPathLabel.setText(resourceMap.getString("directoryPathLabel.text")); // NOI18N
+        directoryPathLabel.setName("directoryPathLabel"); // NOI18N
+
+        SelecDirButton.setText(resourceMap.getString("SelecDirButton.text")); // NOI18N
+        SelecDirButton.setName("SelecDirButton"); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(dirPathTitleLabel))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(directoryPathLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelecDirButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,7 +500,14 @@ public class AntManagerView extends FrameView {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(dirPathTitleLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(directoryPathLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelecDirButton))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -502,15 +545,15 @@ public class AntManagerView extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 449, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 506, Short.MAX_VALUE)
                 .addComponent(statusAnimationLabel)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
-                .addContainerGap(309, Short.MAX_VALUE)
+                .addContainerGap(366, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -534,54 +577,51 @@ public class AntManagerView extends FrameView {
     @Action
     public void Compile1()
     {
-        boolean res = b1.Compile();
+        /*boolean res = b1.Compile();
         if(res)jLabel2.setText("OK");
-        else jLabel2.setText("!OK");
+        else jLabel2.setText("!OK");*/
     }
 
     @Action
     public void Deploy1() {
-        boolean res = b1.Deploy();
+       /* boolean res = b1.Deploy();
         if(res)jLabel3.setText("OK");
-        else jLabel3.setText("!OK");
+        else jLabel3.setText("!OK");*/
     }
 
     @Action
     public void Run1() {
-        boolean res = b1.Run();
+        /*boolean res = b1.Run();
         if(res)jLabel4.setText("OK");
-        else jLabel4.setText("!OK");
+        else jLabel4.setText("!OK");*/
     }
 
     @Action
     public void Compile2() {
-        boolean res = b2.Compile();
+       /* boolean res = b2.Compile();
         if(res)jLabel6.setText("OK");
-        else jLabel6.setText("!OK");
+        else jLabel6.setText("!OK");*/
     }
 
     @Action
     public void Deploy2() {
-        boolean res = b2.Deploy();
+        /*boolean res = b2.Deploy();
         if(res)jLabel7.setText("OK");
-        else jLabel7.setText("!OK");
+        else jLabel7.setText("!OK");*/
     }
 
     @Action
     public void Run2() {
-        boolean res = b2.Run();
+        /*boolean res = b2.Run();
         if(res)jLabel8.setText("OK");
-        else jLabel8.setText("!OK");
+        else jLabel8.setText("!OK");*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SelecDirButton;
+    private javax.swing.JLabel dirPathTitleLabel;
+    private javax.swing.JLabel directoryPathLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
@@ -597,15 +637,7 @@ public class AntManagerView extends FrameView {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -620,8 +652,6 @@ public class AntManagerView extends FrameView {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
