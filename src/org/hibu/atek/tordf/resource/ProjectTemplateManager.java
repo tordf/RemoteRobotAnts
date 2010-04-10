@@ -5,11 +5,11 @@
 
 package org.hibu.atek.tordf.resource;
 
-import org.hibu.atek.tordf.resource.TemplateManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibu.atek.tordf.util.DeleteDir;
 import org.hibu.atek.tordf.util.DirectoryCopy;
 
 /**
@@ -50,10 +50,12 @@ public class ProjectTemplateManager implements TemplateManager
                     System.out.println("Directory not created");
                 else
                 {
-                    boolean b = dir.delete();
-                    System.out.println("Directory created:" + dir.getAbsolutePath());
-                }
+                    boolean bDel = DeleteDir.deleteDirectory(dir);
 
+                    if(bDel)
+                        System.out.println("Directory Cleaned:" + dir.getAbsolutePath());
+                }
+                boolean bMake = dir.mkdir();
 
                 DirectoryCopy.copyDirectory(getTemplateDir(), dir);
             } catch (IOException ex) {

@@ -20,7 +20,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import org.hibu.atek.tordf.communication.Server;
 import org.hibu.atek.tordf.resource.ProjectTemplateManager;
-import org.hibu.atek.tordf.resource.TemplateManager;
 
 /**
  * The application's main frame.

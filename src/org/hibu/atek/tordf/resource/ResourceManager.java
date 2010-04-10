@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
+import org.hibu.atek.tordf.source.JavaFileSourceProvider;
 
 /**
  *
@@ -128,6 +129,11 @@ public class ResourceManager extends TimerTask
                 File dir = getTemplateManager().PopulateProject(""+i);
                 Resource r = new Resource(getAddressManager());
                 resources.add(r);
+                JavaFileSourceProvider source = new JavaFileSourceProvider();
+                File f = new File(dir, "\\src\\Run.java");
+                source.setJavaFile(f);
+                r.setSaveHandler(source);
+                r.setSource(source);
                 availableResources.add(r);
 
                 r.setDir(dir);

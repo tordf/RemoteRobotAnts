@@ -5,7 +5,7 @@
 
 package org.hibu.atek.tordf.source;
 
-import org.hibu.atek.tordf.mock.DummySourceProvider;
+import java.io.File;
 import org.hibu.atek.tordf.SourceProvider;
 
 /**
@@ -15,9 +15,12 @@ import org.hibu.atek.tordf.SourceProvider;
 public class SourceFactory
 {
 
-    public static SourceProvider GetDefaultSource()
+    public static SourceProvider GetDefaultSource(File projectDir)
     {
-        return new DummySourceProvider();
+        File f = new File(projectDir, "\\src\\Run.java");
+        JavaFileSourceProvider jfsP = new JavaFileSourceProvider();
+        jfsP.setJavaFile(f);
+        return jfsP;
     }
 
 }

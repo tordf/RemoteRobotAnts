@@ -25,7 +25,7 @@ public class Resource implements SourceProvider,SaveHandler
 
     public String GetSource()
     {
-        if(source == null)source = SourceFactory.GetDefaultSource();
+        if(source == null)source = SourceFactory.GetDefaultSource(dir);
         return source.GetSource();
     }
     private String Owner;
