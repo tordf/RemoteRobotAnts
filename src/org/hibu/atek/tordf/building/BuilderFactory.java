@@ -17,7 +17,7 @@ public class BuilderFactory
 
     public static AntBuilder GetDefaultBuilder(File dir, String NextFree)
     {
-        AntBuilder ab = new DummyBuilder();//new IntegratedAntBuilder(dir, NextFree);
+        AntBuilder ab = new IntegratedAntBuilder(dir, NextFree);
         return ab;
     }
 

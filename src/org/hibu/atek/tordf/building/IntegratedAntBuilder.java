@@ -54,6 +54,7 @@ public class IntegratedAntBuilder implements AntBuilder
         project.addBuildListener(logger);
         project.addBuildListener(new IlabLogger());
         project.setProperty("ant.file", buildFile.getAbsolutePath());
+        project.addTaskDefinition("if", ise.antelope.tasks.IfTask.class);
         project.setProperty("item", "ant");
         // fix this
         //project.setProperty("JAVA_HOME", "C:\\Program Files\\Java\\");
@@ -73,7 +74,9 @@ public class IntegratedAntBuilder implements AntBuilder
 
     public boolean Compile() {
         try {
+            //needs javac tool in classpath don't remove
             project.executeTarget("compile");
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return false;
